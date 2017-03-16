@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">fetcher</string>
+    <string name="preview">预览</string>
+    <string name="not_preview">请选择照片后再预览</string>
+    <string name="app_ok">确定</string>
+    <string name="album">相册</string>
+    <string name="app_cancel">取消</string>
+    <string name="app_choose_image">选择</string>
+</resources>
