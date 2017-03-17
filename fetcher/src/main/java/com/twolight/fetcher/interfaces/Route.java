@@ -7,7 +7,7 @@ package com.twolight.fetcher.interfaces;
 public interface Route {
     void album();
     void cancel();
-    void preview(String path);
+    void preview(String path,int position);
     void preview();
     void ok();
 

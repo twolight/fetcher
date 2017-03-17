@@ -11,7 +11,7 @@ import java.util.List;
  * Created by twolight on 16/11/15.
  */
 
-public class Folder<T> implements Parcelable {
+public class Folder<T extends Entity> implements Parcelable {
 
     /**
      * 文件夹的名称

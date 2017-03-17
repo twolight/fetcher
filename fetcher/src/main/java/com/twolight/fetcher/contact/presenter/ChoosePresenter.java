@@ -3,12 +3,8 @@ package com.twolight.fetcher.contact.presenter;
 import com.twolight.fetcher.Load;
 import com.twolight.fetcher.contact.view.ChooseView;
 import com.twolight.fetcher.model.Data;
+import com.twolight.fetcher.model.DataUseCase;
 import com.twolight.fetcher.model.Entity;
-import com.twolight.fetcher.model.Folder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by twolight on 17/3/16.
@@ -21,38 +17,29 @@ public class ChoosePresenter extends BasePresenter<ChooseView> {
     }
 
     public void getFolder(String folderName){
-        Map<String,Folder> data = Data.getInstance().get();
-
-        List<Entity> entities = new ArrayList<>();
-        if(folderName == null){
-
-            for(Map.Entry<String,Folder> entry : data.entrySet()){
-                entities.addAll(entry.getValue().getChildren());
-            }
-        }else{
-            Folder folder = data.get(folderName);
-            if(folder != null){
-                entities.addAll(folder.getChildren());
-            }
-        }
-
         if(getView() != null){
-            getView().getFolderComplete(entities);
+            getView().getFolderComplete(DataUseCase.getFolder(folderName));
         }
     }
 
     public void select(Entity entity){
-        if(Load.getInstance().isSingle()){
-            entity.setSelected(!entity);
+        if(!Load.getInstance().isSingle()){
+            Data.getInstance().choose(entity);
+            if(getView() != null){
+                getView().onSelectComplete(entity);
+                getView().updateSubmitStatus(!DataUseCase.hasSelected());
+            }
         }
     }
 
-    public void click(Entity entity){
+    public void click(Entity entity,int position){
         if(Load.getInstance().isSingle()){
-            entity.setSelected(true);
+            Data.getInstance().choose(entity);
             if(getView() != null){
-                getView().preview();
+                getView().preview(0);
             }
+        }else{
+
         }
     }
 }

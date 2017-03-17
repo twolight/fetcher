@@ -1,7 +1,5 @@
 package com.twolight.fetcher.ui.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -9,7 +7,6 @@ import android.widget.ProgressBar;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.contact.presenter.LoadPresenter;
 import com.twolight.fetcher.contact.view.LoadView;
-import com.twolight.fetcher.contact.view.PreviewView;
 import com.twolight.fetcher.interfaces.Route;
 import com.twolight.fetcher.ui.fragment.AlbumFragment;
 import com.twolight.fetcher.ui.fragment.ChooseFragment;
@@ -46,14 +43,15 @@ public class FetchActivity extends BaseActivity implements LoadView,Route{
         finish();
     }
 
+
     @Override
-    public void preview(String path) {
-        replaceFragment(R.id.fragment_container, PreviewFragment.create(this));
+    public void preview(String path, int position) {
+        replaceFragment(R.id.fragment_container, PreviewFragment.previewFolder(this,path,position));
     }
 
     @Override
     public void preview() {
-
+        replaceFragment(R.id.fragment_container, PreviewFragment.previewSelect(this));
     }
 
     @Override

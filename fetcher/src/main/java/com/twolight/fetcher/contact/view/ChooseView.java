@@ -11,5 +11,6 @@ import java.util.List;
 public interface ChooseView extends BaseView{
     void getFolderComplete(List<Entity> entities);
     void onSelectComplete(Entity entity);
-    void preview();
+    void updateSubmitStatus(boolean show);
+    void preview(int position);
 }

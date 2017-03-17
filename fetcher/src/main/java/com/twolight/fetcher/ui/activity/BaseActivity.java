@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -25,12 +24,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //x5内核避免闪屏
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
-
-//        tanslucentStatusBar();
-//        setTitlePadding();
-//        setTitleBg(R.color.ffffff);
+        getSupportActionBar().hide();
     }
 
 

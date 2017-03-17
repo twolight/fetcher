@@ -1,5 +1,6 @@
 package com.twolight.fetcher.interfaces;
 
+import android.content.Context;
 import android.widget.ImageView;
 
 /**
@@ -8,7 +9,7 @@ import android.widget.ImageView;
 
 public interface Setting {
     boolean isSingle();
-    void load(ImageView imageView, String path);
+    void load(Context context,ImageView imageView, String path);
     int type();
 
 

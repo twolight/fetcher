@@ -34,6 +34,10 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     private Route mRoute;
     private String mFolderName;
 
+    TextView chooseImagePreview;
+    TextView chooseImageSubmit;
+
+
     public static ChooseFragment create(Route route,String folderName){
         ChooseFragment fragment = new ChooseFragment();
 //        fragment.mSetting = setting;
@@ -85,21 +89,22 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void getFolderComplete(List<Entity> entities) {
         mChooseAdapter = new ChooseAdapter(getContext(),mRoute);
+        mChooseAdapter.setOnChooseItemListener(this);
         mChooseAdapter.add(entities,false);
         mRecyclerView.setAdapter(mChooseAdapter);
 
-        if(Load.getInstance().isSingle()){
+        if(!Load.getInstance().isSingle()){
             ViewStub viewStub = findViewById(R.id.view_stub);
             viewStub.inflate();
 
             TextView chooseImageCount = findViewById(R.id.choose_image_count);
-            TextView chooseImagePreview =  findViewById(R.id.choose_image_preview);
-            TextView chooseImageSubmit =  findViewById(R.id.choose_image_submit);
+            chooseImagePreview =  findViewById(R.id.choose_image_preview);
+            chooseImageSubmit =  findViewById(R.id.choose_image_submit);
 
             chooseImageCount.setText(entities.size()+"张照片");
 
-            chooseImageSubmit.setOnClickListener(this);
             chooseImagePreview.setOnClickListener(this);
+            chooseImageSubmit.setOnClickListener(this);
         }
     }
 
@@ -108,17 +113,23 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
         mChooseAdapter.notifyDataSetChanged();
     }
 
-    public void preview(){
-        mRoute.preview();
+    public void preview(int position){
+        mRoute.preview(mFolderName,position);
     }
 
     @Override
-    public void onItemClick(Entity entity) {
-        mChoosePresenter.click(entity);
+    public void updateSubmitStatus(boolean show) {
+        chooseImagePreview.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        chooseImageSubmit.setSelected(show);
     }
 
     @Override
-    public void onSelect(Entity entity) {
+    public void onItemClick(Entity entity,int position) {
+        mChoosePresenter.click(entity,position);
+    }
+
+    @Override
+    public void onItemSelect(Entity entity) {
         mChoosePresenter.select(entity);
     }
 

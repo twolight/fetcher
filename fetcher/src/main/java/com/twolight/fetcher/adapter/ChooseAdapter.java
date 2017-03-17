@@ -43,26 +43,18 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
             @Override
             public void onClick(View v) {
                 if (mOnChooseItemListener != null) {
-                    mOnChooseItemListener.onItemClick(entity);
+                    mOnChooseItemListener.onItemSelect(entity);
                 }
             }
         });
 
+        Load.getInstance().load(mContext,holder.picture,entity.getPath());
         holder.picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnChooseItemListener != null) {
-                    mOnChooseItemListener.onItemClick(entity);
+                    mOnChooseItemListener.onItemClick(entity,position);
                 }
-            }
-        });
-
-        Load.getInstance().load(holder.picture,entity.getPath());
-
-        holder.picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRoute.preview(entity.getPath());
             }
         });
     }
@@ -76,8 +68,8 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
     }
 
     public interface OnChooseItemListener{
-        void onItemClick(Entity entity);
-        void onSelect(Entity entity);
+        void onItemClick(Entity entity,int position);
+        void onItemSelect(Entity entity);
     }
 
     public class Holder extends RecyclerView.ViewHolder {

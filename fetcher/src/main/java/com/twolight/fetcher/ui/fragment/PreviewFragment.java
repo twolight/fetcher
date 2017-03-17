@@ -23,23 +23,38 @@ import java.util.List;
 public class PreviewFragment extends BaseFragment implements
         View.OnClickListener,PreviewView{
 
-    private List<Entity> mEntities;
-
     protected TextView previewBack;
     protected TextView previewSubmit;
     private int mCurrentPosition;
     private View previewSelect;
     private Route mRoute;
+    private String mFolderName;
+    private List<Entity> mEntities;
+    private int mType;
 
     private PreviewPresenter mPreviewPresenter;
 
-    public static PreviewFragment create(Route route,
+
+
+    public static PreviewFragment previewFolder(Route route,
+                                                String folderName,
                                          int position){
         PreviewFragment fragment = new PreviewFragment();
         fragment.mRoute = route;
+        fragment.mFolderName = folderName;
         fragment.mCurrentPosition = position;
+        fragment.mType = 0;
         return fragment;
     }
+
+    public static PreviewFragment previewSelect(Route route){
+        PreviewFragment fragment = new PreviewFragment();
+        fragment.mRoute = route;
+        fragment.mType = 1;
+        return fragment;
+    }
+
+
 
     @Override
     public int getContentView() {
@@ -49,16 +64,22 @@ public class PreviewFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        init(mEntities,mCurrentPosition);
 
         mPreviewPresenter = new PreviewPresenter(this);
-
-        mPreviewPresenter.checkSelectStatus(mEntities.get(mCurrentPosition));
-        mPreviewPresenter.checkSubmitStatus();
+        mPreviewPresenter.loadData(mType,mFolderName);
     }
 
 
-    private void init(List<Entity> entities,int position) {
+    @Override
+    public void loadDataComplte(List<Entity> entities) {
+        mEntities = entities;
+        init(entities,mCurrentPosition);
+
+        mPreviewPresenter.checkSelectStatus(entities.get(mCurrentPosition));
+        mPreviewPresenter.checkSubmitStatus();
+    }
+
+    private void init(List<Entity> entities, int position) {
         View previewCancel =  findViewById(R.id.preview_cancel);
         previewSelect =  findViewById(R.id.preview_select);
         previewBack =  findViewById(R.id.preview_back);
@@ -67,13 +88,15 @@ public class PreviewFragment extends BaseFragment implements
 
         previewBack.setVisibility(Load.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
         previewCancel.setVisibility(Load.getInstance().isSingle() ? View.VISIBLE : View.INVISIBLE);
+        previewSelect.setVisibility(Load.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
+
 
         previewCancel.setOnClickListener(this);
         previewSelect.setOnClickListener(this);
         previewBack.setOnClickListener(this);
         previewSubmit.setOnClickListener(this);
 
-        ViewPager previewViewpager = (ViewPager) findViewById(R.id.preview_viewpager);
+        ViewPager previewViewpager = findViewById(R.id.preview_viewpager);
         previewViewpager.setAdapter(new PreviewAdapter(getActivity(),entities));
 
         previewViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -94,9 +117,6 @@ public class PreviewFragment extends BaseFragment implements
         });
 
         previewViewpager.setCurrentItem(position);
-
-        previewBack.setOnClickListener(this);
-        previewSelect.setOnClickListener(this);
     }
 
     @Override

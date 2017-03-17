@@ -42,7 +42,7 @@ public class PreviewAdapter extends PagerAdapter {
         imageView.setLayoutParams(new ViewPager.LayoutParams());
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        Load.getInstance().load(imageView,imagePath);
+        Load.getInstance().load(mContext,imageView,imagePath);
         container.addView(imageView);
         return imageView;
     }

@@ -47,11 +47,13 @@ public class AlbumFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAlbumPresenter = new AlbumPresenter(this);
-        mAlbumPresenter.checkSubmitStatus();
 
         initHeader();
         initBottom();
+
+        mAlbumPresenter = new AlbumPresenter(this);
+        mAlbumPresenter.loadAlbumData();
+        mAlbumPresenter.checkSubmitStatus();
     }
 
     @Override
@@ -96,11 +98,7 @@ public class AlbumFragment extends BaseFragment implements
 
     @Override
     public void onAlbumItemClick(Album album) {
-        if(album.isAll()){
-            mRoute.selectAll();
-        }else{
-            mRoute.select();
-        }
+        mRoute.preview(album.isAll() ? null : album.getName(),0);
     }
 
     @Override

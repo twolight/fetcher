@@ -30,11 +30,11 @@ public class AlbumAdapter extends BaseRecyclerViewAdapter<Album> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder h, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder h, final int position) {
         final Album album = mData.get(position);
         FolderListHolder holder = (FolderListHolder) h;
 
-        Load.getInstance().load(holder.folderCover,album.getImage());
+        Load.getInstance().load(mContext,holder.folderCover,album.getImage());
         holder.folderName.setText(album.getName());
         holder.folderCount.setText("("+album.getCount()+")");
         holder.folderSelectedCount.setVisibility(album.getCount() > 0  ?View.VISIBLE : View.INVISIBLE);

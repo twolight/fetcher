@@ -1,5 +1,6 @@
 package com.twolight.fetcher;
 
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.twolight.fetcher.interfaces.Setting;
@@ -24,8 +25,8 @@ public class Load {
         mSetting = setting;
     }
 
-    public void load(ImageView imageView,String path){
-        mSetting.load(imageView,path);
+    public void load(Context context, ImageView imageView, String path){
+        mSetting.load(context,imageView,path);
     }
 
     public boolean isSingle(){
