@@ -1,17 +1,23 @@
 package com.twolight.fetcherdemo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.twolight.fetcher.Fetch;
 import com.twolight.fetcher.interfaces.Setting;
+import com.twolight.fetcher.model.Entity;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean single = false;
+    private final int DATA_RESULT_CODE = 100;
 
 
     @Override
@@ -51,8 +57,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public int type() {
                         return 0;
                     }
+
+                    @Override
+                    public int resultCode() {
+                        return DATA_RESULT_CODE;
+                    }
                 });
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == DATA_RESULT_CODE){
+            ArrayList<Entity> dataList = data.getExtras().getParcelableArrayList("data");
+
+            for (Entity entity : dataList){
+                Log.e(this.getLocalClassName(),entity.getPath());
+            }
         }
     }
 }

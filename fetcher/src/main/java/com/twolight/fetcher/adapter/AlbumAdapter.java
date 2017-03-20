@@ -37,8 +37,8 @@ public class AlbumAdapter extends BaseRecyclerViewAdapter<Album> {
         Load.getInstance().load(mContext,holder.folderCover,album.getImage());
         holder.folderName.setText(album.getName());
         holder.folderCount.setText("("+album.getCount()+")");
-        holder.folderSelectedCount.setVisibility(album.getCount() > 0  ?View.VISIBLE : View.INVISIBLE);
-        holder.folderSelectedCount.setText(String.valueOf(album.getCount()));
+        holder.folderSelectedCount.setVisibility(album.getSelectCount() > 0 ? View.VISIBLE : View.INVISIBLE);
+        holder.folderSelectedCount.setText(String.valueOf(album.getSelectCount()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

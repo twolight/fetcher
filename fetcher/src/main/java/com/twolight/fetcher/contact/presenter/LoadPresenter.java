@@ -47,6 +47,10 @@ public class LoadPresenter extends BasePresenter<LoadView> {
                 });
     }
 
+    public void release(){
+        Data.getInstance().clear();
+    }
+
     @Override
     public void detachView() {
         super.detachView();

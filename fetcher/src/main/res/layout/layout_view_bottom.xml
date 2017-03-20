@@ -13,40 +13,5 @@
         android:textColor="@color/c666666"
         android:background="@color/ffffff"/>
 
-
-    <RelativeLayout
-        android:id="@+id/choose_image_bottom"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/f3f3f3">
-
-        <TextView
-            android:id="@+id/choose_image_preview"
-            android:layout_width="47dp"
-            android:layout_height="27dp"
-            android:layout_marginLeft="12dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textColor="@color/c999999"
-            android:text="@string/preview"
-            android:background="@drawable/shape_choose_image_preview"/>
-
-
-        <TextView
-            android:id="@+id/choose_image_submit"
-            android:layout_width="61dp"
-            android:layout_height="27dp"
-            android:layout_marginRight="12dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textColor="@color/ffffff"
-            android:text="@string/app_ok"
-            android:background="@drawable/selector_choose_image_submit"/>
-
-    </RelativeLayout>
+    <include layout="@layout/layout_bottom"/>
 </LinearLayout>

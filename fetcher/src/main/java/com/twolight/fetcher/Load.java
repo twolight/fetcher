@@ -37,5 +37,9 @@ public class Load {
         return mSetting.type();
     }
 
+    public int resultCode(){
+        return mSetting.resultCode();
+    }
+
 
 }

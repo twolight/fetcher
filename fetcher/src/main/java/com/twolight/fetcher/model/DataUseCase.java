@@ -15,7 +15,6 @@ public class DataUseCase {
 
         List<Entity> entities = new ArrayList<>();
         if(folderName == null){
-
             for(Map.Entry<String,Folder> entry : data.entrySet()){
                 entities.addAll(entry.getValue().getChildren());
             }
@@ -30,11 +29,11 @@ public class DataUseCase {
     }
 
     public static boolean hasSelected(){
-        return !Data.getInstance().getSeleccted().isEmpty();
+        return !Data.getInstance().getSelected().isEmpty();
     }
 
     public static List<Entity> getChooses(){
-        return Data.getInstance().getSeleccted();
+        return Data.getInstance().getSelected();
     }
 
     public static List<Album> getAlbum(){
@@ -49,7 +48,7 @@ public class DataUseCase {
 
         for(Map.Entry<String,Folder> entry : data.entrySet()){
             Folder folder = entry.getValue();
-            List<Entity> entities = Data.getInstance().getSeleccted();
+            List<Entity> entities = Data.getInstance().getSelected();
 
             int selectCount = 0;
             for(Entity entity : entities){
@@ -66,6 +65,7 @@ public class DataUseCase {
             }
 
             Album album = new Album();
+            album.setPath(folder.getDir());
             album.setName(folder.getName());
             album.setImage(folder.getFirstImagePath());
             album.setCount(folder.getChildren().size());
@@ -75,11 +75,12 @@ public class DataUseCase {
         }
 
         Album album = new Album();
+        album.setPath(null);
         album.setName(allName);
         album.setImage(allImage);
         album.setCount(allCount);
         album.setSelectCount(allSelectCount);
-        albums.add(album);
+        albums.add(0,album);
 
         return albums;
     }

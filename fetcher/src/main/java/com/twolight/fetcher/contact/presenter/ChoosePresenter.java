@@ -27,7 +27,7 @@ public class ChoosePresenter extends BasePresenter<ChooseView> {
             Data.getInstance().choose(entity);
             if(getView() != null){
                 getView().onSelectComplete(entity);
-                getView().updateSubmitStatus(!DataUseCase.hasSelected());
+                getView().updateSubmitStatus(DataUseCase.hasSelected());
             }
         }
     }

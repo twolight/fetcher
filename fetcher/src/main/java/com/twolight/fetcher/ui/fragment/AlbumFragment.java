@@ -41,7 +41,7 @@ public class AlbumFragment extends BaseFragment implements
 
     @Override
     public int getContentView() {
-        return R.layout.activity_choose_folder;
+        return R.layout.fragment_album;
     }
 
     @Override
@@ -77,6 +77,11 @@ public class AlbumFragment extends BaseFragment implements
         title.setText(R.string.album);
     }
 
+    public void initBottom(){
+        chooseImagePreview =  findViewById(R.id.choose_image_preview);
+        chooseImageSubmit = findViewById(R.id.choose_image_submit);
+    }
+
     @Override
     public void initContent(List<Album> albums) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -85,31 +90,22 @@ public class AlbumFragment extends BaseFragment implements
 
         adapter = new AlbumAdapter(getContext());
         adapter.add(albums,true);
-//        adapter.setOnFolderItemClickListener(this);
+        adapter.setOnAlbumItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
-    }
-
-    public void initBottom(){
-        chooseImagePreview =  findViewById(R.id.choose_folder_preview);
-        chooseImageSubmit = findViewById(R.id.choose_folder_submit);
-        chooseImagePreview.setOnClickListener(this);
-        chooseImageSubmit.setOnClickListener(this);
     }
 
     @Override
     public void onAlbumItemClick(Album album) {
-        mRoute.preview(album.isAll() ? null : album.getName(),0);
+        mRoute.select(album.getPath());
     }
 
     @Override
     public void showSubmitStatus(boolean show) {
-        if(show){
-            chooseImageSubmit.setSelected(true);
-            chooseImageSubmit.setOnClickListener(this);
-        }else{
-            chooseImageSubmit.setSelected(false);
-            chooseImageSubmit.setOnClickListener(null);
-        }
+        chooseImageSubmit.setSelected(show);
+        chooseImageSubmit.setOnClickListener(show ? this : null);
+
+        chooseImagePreview.setSelected(show);
+        chooseImagePreview.setOnClickListener(show ? this : null);
     }
 
     @Override
@@ -118,15 +114,9 @@ public class AlbumFragment extends BaseFragment implements
         int i = v.getId();
         if (i == R.id.normal_header_menu_tV) {
             mRoute.cancel();
-
-        } else if (i == R.id.choose_folder_preview) {
-            if (mAlbumPresenter.canPreview()) {
-                mRoute.preview();
-            } else {
-                showToast(R.string.not_preview);
-            }
-
-        } else if (i == R.id.choose_folder_submit) {
+        } else if (i == R.id.choose_image_preview) {
+            mRoute.preview();
+        } else if (i == R.id.choose_image_submit) {
             mRoute.ok();
 
         }

@@ -48,7 +48,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_view;
+        return R.layout.fragment_choose;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void updateSubmitStatus(boolean show) {
-        chooseImagePreview.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        chooseImagePreview.setSelected(show);
         chooseImageSubmit.setSelected(show);
     }
 

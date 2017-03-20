@@ -9,6 +9,7 @@ public class Album {
     private String name;
     private int count;
     private int selectCount;
+    private String path;
     private boolean all;
 
 
@@ -50,5 +51,13 @@ public class Album {
 
     public void setAll(boolean all) {
         this.all = all;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

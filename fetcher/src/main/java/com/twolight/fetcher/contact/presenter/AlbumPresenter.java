@@ -22,12 +22,12 @@ public class AlbumPresenter extends BasePresenter<AlbumView>{
 
     public void checkSubmitStatus(){
         if(getView() != null){
-            getView().showSubmitStatus(!Data.getInstance().getSeleccted().isEmpty());
+            getView().showSubmitStatus(!Data.getInstance().getSelected().isEmpty());
         }
     }
 
     public boolean canPreview(){
-        return !Data.getInstance().getSeleccted().isEmpty();
+        return !Data.getInstance().getSelected().isEmpty();
     }
 
 }

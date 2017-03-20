@@ -37,7 +37,7 @@ public class PreviewPresenter extends BasePresenter<PreviewView> {
 
     public void checkSubmitStatus(){
         if(getView() != null){
-            getView().showSubmitStatus(!Data.getInstance().getSeleccted().isEmpty());
+            getView().showSubmitStatus(!Data.getInstance().getSelected().isEmpty());
         }
     }
 }

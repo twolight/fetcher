@@ -44,7 +44,11 @@ public class Data<T extends Entity> {
         entity.setSelected(!entity.isSelected());
     }
 
-    public List<Entity> getSeleccted(){
+    public List<Entity> getSelected(){
         return mEntities;
+    }
+
+    public void clear(){
+        mEntities.clear();
     }
 }
