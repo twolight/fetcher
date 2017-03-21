@@ -125,11 +125,13 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void showSubmitStatus(boolean show) {
-        chooseImagePreview.setSelected(show);
-        chooseImageSubmit.setSelected(show);
+        if(!Load.getInstance().isSingle()){
+            chooseImagePreview.setSelected(show);
+            chooseImageSubmit.setSelected(show);
 
-        chooseImagePreview.setOnClickListener(show ? this : null);
-        chooseImageSubmit.setOnClickListener(show ? this : null);
+            chooseImagePreview.setOnClickListener(show ? this : null);
+            chooseImageSubmit.setOnClickListener(show ? this : null);
+        }
     }
 
     @Override

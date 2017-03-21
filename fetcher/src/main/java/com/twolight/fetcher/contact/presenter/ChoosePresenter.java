@@ -35,7 +35,7 @@ public class ChoosePresenter extends BasePresenter<ChooseView> {
         if(Load.getInstance().isSingle()){
             Data.getInstance().choose(entity);
             if(getView() != null){
-                getView().preview(0);
+                getView().preview(position);
             }
         }else{
             if(getView() != null){

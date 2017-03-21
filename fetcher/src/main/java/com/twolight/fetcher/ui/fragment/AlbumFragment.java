@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.twolight.fetcher.Load;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.adapter.AlbumAdapter;
 import com.twolight.fetcher.contact.presenter.AlbumPresenter;
@@ -83,8 +85,13 @@ public class AlbumFragment extends BaseFragment implements
     }
 
     public void initBottom(){
-        chooseImagePreview =  findViewById(R.id.choose_image_preview);
-        chooseImageSubmit = findViewById(R.id.choose_image_submit);
+        if(!Load.getInstance().isSingle()){
+            ViewStub viewStub = findViewById(R.id.ablum_view_stub);
+            viewStub.inflate();
+
+            chooseImagePreview =  findViewById(R.id.choose_image_preview);
+            chooseImageSubmit = findViewById(R.id.choose_image_submit);
+        }
     }
 
     @Override
