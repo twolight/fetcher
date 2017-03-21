@@ -17,8 +17,8 @@
     </android.support.v7.widget.RecyclerView>
 
     <ViewStub
-        android:id="@+id/ablum_view_stub"
+        android:id="@+id/album_view_stub"
         android:layout="@layout/layout_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
 </LinearLayout>

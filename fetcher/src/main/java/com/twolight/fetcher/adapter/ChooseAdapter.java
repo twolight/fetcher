@@ -27,7 +27,7 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_multiple_choose_picture,null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_choose_picture,null);
         return new Holder(view);
     }
 

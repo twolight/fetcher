@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int REQUEST_CODE = 101;
     private CheckBox mSingleCheckBox;
     private RadioGroup mTypeCheckBox;
+    private DataAdapter mDataAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         findViewById(R.id.start).setOnClickListener(this);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);
+        mDataAdapter = new DataAdapter(this);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.selected_list);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(mDataAdapter);
     }
 
     @Override
@@ -106,10 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(resultCode == 100){
             ArrayList<Entity> dataList = data.getExtras().getParcelableArrayList("data");
-
-            for (Entity entity : dataList){
-                Log.e(this.getLocalClassName(),entity.getPath());
-            }
+            mDataAdapter.add(dataList,true);
+            mDataAdapter.notifyDataSetChanged();
         }
     }
 }

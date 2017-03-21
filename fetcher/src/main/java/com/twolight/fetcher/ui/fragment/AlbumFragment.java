@@ -86,7 +86,7 @@ public class AlbumFragment extends BaseFragment implements
 
     public void initBottom(){
         if(!Load.getInstance().isSingle()){
-            ViewStub viewStub = findViewById(R.id.ablum_view_stub);
+            ViewStub viewStub = findViewById(R.id.album_view_stub);
             viewStub.inflate();
 
             chooseImagePreview =  findViewById(R.id.choose_image_preview);
