@@ -43,33 +43,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.start:
-                Fetch.start(this, new Setting() {
-                    @Override
-                    public boolean isSingle() {
-                        return single;
-                    }
-
-                    @Override
-                    public void load(Context context,ImageView imageView, String path) {
-                        Glide.with(context).load(path).into(imageView);
-                    }
-
-                    @Override
-                    public int type() {
-                        return 0;
-                    }
-
-                    @Override
-                    public int resultCode() {
-                        return DATA_RESULT_CODE;
-                    }
-
-                    @Override
-                    public int requestCode() {
-                        return DATA_REQUEST_CODE;
-                    }
-                });
+                Fetch.start(this, new FetchSetting());
                 break;
+        }
+    }
+
+    public static class FetchSetting implements Setting{
+        @Override
+        public boolean isSingle() {
+            return false;
+        }
+
+        @Override
+        public void load(Context context, ImageView imageView, String path) {
+            Glide.with(context).load(path).into(imageView);
+        }
+
+        @Override
+        public int type() {
+            return 0;
+        }
+
+        @Override
+        public int resultCode() {
+            return 100;
+        }
+
+        @Override
+        public int requestCode() {
+            return 101;
         }
     }
 
@@ -77,12 +79,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == DATA_RESULT_CODE){
+        if(resultCode == 100){
             ArrayList<Entity> dataList = data.getExtras().getParcelableArrayList("data");
 
             for (Entity entity : dataList){
                 Log.e(this.getLocalClassName(),entity.getPath());
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("twolight","MainActivity onDestroy");
     }
 }
