@@ -20,7 +20,6 @@ import com.twolight.fetcher.model.Entity;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
-    private boolean single = false;
     private boolean image = true;
     private final int RESULT_CODE = 100;
     private final int REQUEST_CODE = 101;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mSingleCheckBox = (CheckBox)findViewById(R.id.single);
-        mSingleCheckBox.setChecked(single);
+        mSingleCheckBox.setChecked(true);
 
 
         findViewById(R.id.start).setOnClickListener(this);
