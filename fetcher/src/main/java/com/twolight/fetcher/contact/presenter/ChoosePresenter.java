@@ -16,30 +16,31 @@ public class ChoosePresenter extends BasePresenter<ChooseView> {
         super(baseView);
     }
 
-    public void getFolder(String folderName){
+    public void getEntityByFolder(String folderName){
         if(getView() != null){
             getView().getFolderComplete(DataUseCase.getFolder(folderName));
         }
     }
 
-    public void select(Entity entity){
+    public void selectItem(Entity entity, int position){
         if(!Load.getInstance().isSingle()){
             Data.getInstance().choose(entity);
             if(getView() != null){
-                getView().onSelectComplete(entity);
-                getView().updateSubmitStatus(DataUseCase.hasSelected());
+                getView().onSelectComplete(entity,position);
             }
         }
     }
 
-    public void click(Entity entity,int position){
+    public void clickItem(Entity entity, int position){
         if(Load.getInstance().isSingle()){
             Data.getInstance().choose(entity);
             if(getView() != null){
                 getView().preview(0);
             }
         }else{
-
+            if(getView() != null){
+                getView().preview(position);
+            }
         }
     }
 }

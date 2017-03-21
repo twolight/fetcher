@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.twolight.fetcher.Load;
@@ -23,14 +24,15 @@ import java.util.List;
 public class PreviewFragment extends BaseFragment implements
         View.OnClickListener,PreviewView{
 
-    protected TextView previewBack;
+    protected ImageView previewBack;
     protected TextView previewSubmit;
-    private int mCurrentPosition;
+    private int mInitPosition;
     private View previewSelect;
     private Route mRoute;
     private String mFolderName;
     private List<Entity> mEntities;
     private int mType;
+    private PreviewAdapter mPreviewAdapter;
 
     private PreviewPresenter mPreviewPresenter;
 
@@ -42,7 +44,7 @@ public class PreviewFragment extends BaseFragment implements
         PreviewFragment fragment = new PreviewFragment();
         fragment.mRoute = route;
         fragment.mFolderName = folderName;
-        fragment.mCurrentPosition = position;
+        fragment.mInitPosition = position;
         fragment.mType = 0;
         return fragment;
     }
@@ -58,7 +60,7 @@ public class PreviewFragment extends BaseFragment implements
 
     @Override
     public int getContentView() {
-        return R.layout.activity_preview_single_image;
+        return R.layout.fragment_preview;
     }
 
     @Override
@@ -71,11 +73,11 @@ public class PreviewFragment extends BaseFragment implements
 
 
     @Override
-    public void loadDataComplte(List<Entity> entities) {
+    public void loadDataComplete(List<Entity> entities) {
         mEntities = entities;
-        init(entities,mCurrentPosition);
+        init(entities, mInitPosition);
 
-        mPreviewPresenter.checkSelectStatus(entities.get(mCurrentPosition));
+        mPreviewPresenter.checkSelectStatus(entities.get(mInitPosition));
         mPreviewPresenter.checkSubmitStatus();
     }
 
@@ -96,6 +98,8 @@ public class PreviewFragment extends BaseFragment implements
         previewBack.setOnClickListener(this);
         previewSubmit.setOnClickListener(this);
 
+
+        mPreviewAdapter = new PreviewAdapter(getActivity(),entities);
         ViewPager previewViewpager = findViewById(R.id.preview_viewpager);
         previewViewpager.setAdapter(new PreviewAdapter(getActivity(),entities));
 
@@ -107,6 +111,7 @@ public class PreviewFragment extends BaseFragment implements
 
             @Override
             public void onPageSelected(int position) {
+                mInitPosition = position;
                 mPreviewPresenter.checkSelectStatus(mEntities.get(position));
             }
 
@@ -120,14 +125,14 @@ public class PreviewFragment extends BaseFragment implements
     }
 
     @Override
+    public void selectComplete() {
+        mPreviewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void showSubmitStatus(boolean show) {
-        if(show){
-            previewSubmit.setSelected(true);
-            previewSubmit.setOnClickListener(this);
-        }else{
-            previewSubmit.setSelected(false);
-            previewSubmit.setOnClickListener(null);
-        }
+        previewSubmit.setSelected(show);
+        previewSubmit.setOnClickListener(show ? this : null);
     }
 
     @Override
@@ -140,19 +145,17 @@ public class PreviewFragment extends BaseFragment implements
         int i = v.getId();
         if (i == R.id.preview_cancel) {
             mRoute.cancel();
-
         } else if (i == R.id.preview_select) {
-            mRoute.cancel();
-
+            mPreviewPresenter.select(mEntities.get(mInitPosition));
         } else if (i == R.id.preview_back) {
-            mRoute.cancel();
-
+            mRoute.pop();
         } else if (i == R.id.preview_submit) {
             mRoute.ok();
 
         } else {
         }
     }
+
 
     @Override
     public void onDetach() {

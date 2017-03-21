@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -13,7 +14,9 @@ import com.twolight.fetcher.Load;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.adapter.ChooseAdapter;
 import com.twolight.fetcher.contact.presenter.ChoosePresenter;
+import com.twolight.fetcher.contact.presenter.SelectPresenter;
 import com.twolight.fetcher.contact.view.ChooseView;
+import com.twolight.fetcher.contact.view.SelectView;
 import com.twolight.fetcher.interfaces.Route;
 import com.twolight.fetcher.model.Entity;
 
@@ -24,11 +27,12 @@ import java.util.List;
  */
 
 public class ChooseFragment extends BaseFragment implements View.OnClickListener,
-        ChooseView,
+        ChooseView,SelectView,
         ChooseAdapter.OnChooseItemListener{
     private RecyclerView mRecyclerView;
     private ChooseAdapter mChooseAdapter;
     private ChoosePresenter mChoosePresenter;
+    private SelectPresenter mSelectPresenter;
 
 //    private Setting mSetting;
     private Route mRoute;
@@ -59,7 +63,10 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
         initContent();
 
         mChoosePresenter = new ChoosePresenter(this);
-        mChoosePresenter.getFolder(mFolderName);
+        mChoosePresenter.getEntityByFolder(mFolderName);
+
+        mSelectPresenter = new SelectPresenter(this);
+        mSelectPresenter.checkSubmitStatus();
     }
 
     private void initHeader() {
@@ -102,38 +109,38 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
             chooseImageSubmit =  findViewById(R.id.choose_image_submit);
 
             chooseImageCount.setText(entities.size()+"张照片");
-
-            chooseImagePreview.setOnClickListener(this);
-            chooseImageSubmit.setOnClickListener(this);
         }
     }
 
     @Override
-    public void onSelectComplete(Entity entity) {
-        mChooseAdapter.notifyDataSetChanged();
+    public void onSelectComplete(Entity entity,int position) {
+        mChooseAdapter.notifyItemChanged(position,entity);
+        mSelectPresenter.checkSubmitStatus();
     }
 
+    @Override
     public void preview(int position){
         mRoute.preview(mFolderName,position);
     }
 
     @Override
-    public void updateSubmitStatus(boolean show) {
+    public void showSubmitStatus(boolean show) {
         chooseImagePreview.setSelected(show);
         chooseImageSubmit.setSelected(show);
+
+        chooseImagePreview.setOnClickListener(show ? this : null);
+        chooseImageSubmit.setOnClickListener(show ? this : null);
     }
 
     @Override
     public void onItemClick(Entity entity,int position) {
-        mChoosePresenter.click(entity,position);
+        mChoosePresenter.clickItem(entity,position);
     }
 
     @Override
-    public void onItemSelect(Entity entity) {
-        mChoosePresenter.select(entity);
+    public void onItemSelect(Entity entity,int position) {
+        mChoosePresenter.selectItem(entity,position);
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -156,6 +163,8 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.e(ChooseFragment.class.getSimpleName(),"ChooseFragment onDetach");
         mChoosePresenter.detachView();
+        mSelectPresenter.detachView();
     }
 }

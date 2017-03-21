@@ -11,5 +11,6 @@ import java.util.List;
 public interface PreviewView extends BaseView {
     void showSubmitStatus(boolean show);
     void setSelectStatus(boolean selected);
-    void loadDataComplte(List<Entity> entities);
+    void loadDataComplete(List<Entity> entities);
+    void selectComplete();
 }

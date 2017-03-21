@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.adapter.AlbumAdapter;
 import com.twolight.fetcher.contact.presenter.AlbumPresenter;
+import com.twolight.fetcher.contact.presenter.SelectPresenter;
 import com.twolight.fetcher.contact.view.AlbumView;
+import com.twolight.fetcher.contact.view.SelectView;
 import com.twolight.fetcher.interfaces.Route;
 import com.twolight.fetcher.model.Album;
 
@@ -22,7 +24,7 @@ import java.util.List;
  * Created by twolight on 16/7/13.
  */
 public class AlbumFragment extends BaseFragment implements
-        View.OnClickListener,AlbumView,AlbumAdapter.OnAlbumItemClickListener {
+        View.OnClickListener,AlbumView,SelectView,AlbumAdapter.OnAlbumItemClickListener {
     private RecyclerView mRecyclerView;
     private AlbumAdapter adapter;
 
@@ -30,6 +32,7 @@ public class AlbumFragment extends BaseFragment implements
     protected TextView chooseImageSubmit;
 
     private AlbumPresenter mAlbumPresenter;
+    private SelectPresenter mSelectPresenter;
     private Route mRoute;
 
 
@@ -53,7 +56,9 @@ public class AlbumFragment extends BaseFragment implements
 
         mAlbumPresenter = new AlbumPresenter(this);
         mAlbumPresenter.loadAlbumData();
-        mAlbumPresenter.checkSubmitStatus();
+
+        mSelectPresenter = new SelectPresenter(this);
+        mSelectPresenter.checkSubmitStatus();
     }
 
     @Override
@@ -99,6 +104,8 @@ public class AlbumFragment extends BaseFragment implements
         mRoute.select(album.getPath());
     }
 
+
+
     @Override
     public void showSubmitStatus(boolean show) {
         chooseImageSubmit.setSelected(show);
@@ -126,5 +133,6 @@ public class AlbumFragment extends BaseFragment implements
     public void onDetach() {
         super.onDetach();
         mAlbumPresenter.detachView();
+        mSelectPresenter.detachView();
     }
 }

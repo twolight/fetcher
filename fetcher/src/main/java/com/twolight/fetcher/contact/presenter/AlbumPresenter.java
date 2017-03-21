@@ -1,7 +1,6 @@
 package com.twolight.fetcher.contact.presenter;
 
 import com.twolight.fetcher.contact.view.AlbumView;
-import com.twolight.fetcher.model.Data;
 import com.twolight.fetcher.model.DataUseCase;
 
 /**
@@ -19,15 +18,4 @@ public class AlbumPresenter extends BasePresenter<AlbumView>{
             getView().initContent(DataUseCase.getAlbum());
         }
     }
-
-    public void checkSubmitStatus(){
-        if(getView() != null){
-            getView().showSubmitStatus(!Data.getInstance().getSelected().isEmpty());
-        }
-    }
-
-    public boolean canPreview(){
-        return !Data.getInstance().getSelected().isEmpty();
-    }
-
 }

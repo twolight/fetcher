@@ -10,6 +10,6 @@ public interface Route {
     void preview(String path,int position);
     void preview();
     void ok();
-
+    void pop();
     void select(String folderName);
 }

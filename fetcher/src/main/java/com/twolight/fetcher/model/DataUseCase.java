@@ -33,7 +33,9 @@ public class DataUseCase {
     }
 
     public static List<Entity> getChooses(){
-        return Data.getInstance().getSelected();
+        List<Entity> entities = new ArrayList<>();
+        entities.addAll(Data.getInstance().getSelected());
+        return entities;
     }
 
     public static List<Album> getAlbum(){

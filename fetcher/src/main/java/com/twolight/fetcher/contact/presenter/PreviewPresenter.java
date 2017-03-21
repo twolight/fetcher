@@ -25,7 +25,7 @@ public class PreviewPresenter extends BasePresenter<PreviewView> {
             entities = DataUseCase.getChooses();
         }
         if(getView() != null && entities != null){
-            getView().loadDataComplte(entities);
+            getView().loadDataComplete(entities);
         }
     }
 
@@ -39,5 +39,13 @@ public class PreviewPresenter extends BasePresenter<PreviewView> {
         if(getView() != null){
             getView().showSubmitStatus(!Data.getInstance().getSelected().isEmpty());
         }
+    }
+
+    public void select(Entity entity){
+        Data.getInstance().choose(entity);
+        if(getView() != null){
+            getView().selectComplete();
+        }
+        checkSelectStatus(entity);
     }
 }

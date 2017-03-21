@@ -43,7 +43,7 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
             @Override
             public void onClick(View v) {
                 if (mOnChooseItemListener != null) {
-                    mOnChooseItemListener.onItemSelect(entity);
+                    mOnChooseItemListener.onItemSelect(entity,position);
                 }
             }
         });
@@ -69,7 +69,7 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
 
     public interface OnChooseItemListener{
         void onItemClick(Entity entity,int position);
-        void onItemSelect(Entity entity);
+        void onItemSelect(Entity entity,int position);
     }
 
     public class Holder extends RecyclerView.ViewHolder {

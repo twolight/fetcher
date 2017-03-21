@@ -50,15 +50,19 @@ public class FetchActivity extends BaseActivity implements LoadView,Route{
         mLoadPresenter.release();
     }
 
+    @Override
+    public void pop() {
+        getSupportFragmentManager().popBackStack();
+    }
 
     @Override
     public void preview(String path, int position) {
-        replaceFragment(R.id.fragment_container, PreviewFragment.previewFolder(this,path,position));
+        replaceFragmentBackStack(R.id.fragment_container, PreviewFragment.previewFolder(this,path,position));
     }
 
     @Override
     public void preview() {
-        replaceFragment(R.id.fragment_container, PreviewFragment.previewSelect(this));
+        replaceFragmentBackStack(R.id.fragment_container, PreviewFragment.previewSelect(this));
     }
 
     @Override

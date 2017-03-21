@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface AlbumView extends BaseView {
     void initContent(List<Album> albums);
-    void showSubmitStatus(boolean show);
 }

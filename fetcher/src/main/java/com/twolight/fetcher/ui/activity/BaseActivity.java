@@ -33,12 +33,13 @@ public class BaseActivity extends AppCompatActivity {
         return super.onCreateView(name, context, attrs);
     }
 
-    public void addFragment(int containerViewId, Fragment fragment){
-        getSupportFragmentManager().beginTransaction().add(containerViewId,fragment).commit();
+    public void replaceFragmentBackStack(int containerViewId,Fragment fragment){
+        getSupportFragmentManager().beginTransaction()
+                .replace(containerViewId,fragment)
+                .addToBackStack(null)
+                .commit();
     }
-    public void removeFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-    }
+
     public void replaceFragment(int containerViewId,Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(containerViewId,fragment).commit();
     }
