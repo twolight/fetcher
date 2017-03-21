@@ -69,7 +69,7 @@ public class FetchActivity extends BaseActivity implements LoadView,Route{
     public void ok() {
         Intent intent = new Intent();
         intent.putParcelableArrayListExtra("data", (ArrayList<Entity>) Data.getInstance().getSelected());
-        setResult(Load.getInstance().resultCode());
+        setResult(Load.getInstance().resultCode(),intent);
         finish();
 
         mLoadPresenter.release();

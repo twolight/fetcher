@@ -1,6 +1,6 @@
 package com.twolight.fetcher;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 
 import com.twolight.fetcher.interfaces.Setting;
@@ -11,10 +11,10 @@ import com.twolight.fetcher.ui.activity.FetchActivity;
  */
 
 public class Fetch {
-    public static void start(Context context, Setting setting){
+    public static void start(Activity activity, Setting setting){
         Load.getInstance().init(setting);
 
-        Intent intent = new Intent(context, FetchActivity.class);
-        context.startActivity(intent);
+        Intent intent = new Intent(activity, FetchActivity.class);
+        activity.startActivityForResult(intent,setting.requestCode());
     }
 }

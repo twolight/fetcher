@@ -12,6 +12,7 @@ public interface Setting {
     void load(Context context,ImageView imageView, String path);
     int type();
     int resultCode();
+    int requestCode();
 
 
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean single = false;
     private final int DATA_RESULT_CODE = 100;
+    private final int DATA_REQUEST_CODE = 101;
 
 
     @Override
@@ -61,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public int resultCode() {
                         return DATA_RESULT_CODE;
+                    }
+
+                    @Override
+                    public int requestCode() {
+                        return DATA_REQUEST_CODE;
                     }
                 });
                 break;
