@@ -47,5 +47,6 @@ public class PreviewPresenter extends BasePresenter<PreviewView> {
             getView().selectComplete();
         }
         checkSelectStatus(entity);
+        checkSubmitStatus();
     }
 }
