@@ -10,9 +10,7 @@ import com.twolight.fetcher.model.Image;
 import com.twolight.fetcher.model.Video;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,20 +86,24 @@ public class ContentResProvider {
 
 
 
-    public static Observable<List<Folder<Video>>> getSystemVideo(final Context context){
+    public static Observable<Map<String,Folder<Video>>> getSystemVideo(final Context context){
         return  getMediaVideo(context)
-                .map(new Func1<Cursor, List<Folder<Video>>>() {
+                .map(new Func1<Cursor, Map<String,Folder<Video>>>() {
                     @Override
-                    public List<Folder<Video>> call(Cursor cursor) {
-                        List<Folder<Video>> folders = new ArrayList<>();
+                    public Map<String,Folder<Video>> call(Cursor cursor) {
+                        Map<String,Folder<Video>> folders = new HashMap<String, Folder<Video>>();
                         if(cursor == null){
                             return null;
                         }
-                        HashMap<String,Folder> dirs = new HashMap<>();
                         Folder imageFloder = null;
 
                         while (cursor.moveToNext()) {
                             //获取图片的路径
+
+                            String mimeType = cursor.getString(cursor
+                                    .getColumnIndex(MediaStore.Video.Media.MIME_TYPE));
+
+
                             String path = cursor.getString(cursor
                                     .getColumnIndex(MediaStore.Video.Media.DATA));
 
@@ -138,11 +140,10 @@ public class ContentResProvider {
                                         .getColumnIndex(MediaStore.Video.Thumbnails.DATA)));
                             }
 
-                            if (dirs.containsKey(parentPath)) {
-                                dirs.get(parentPath).getChildren().add(video);
+                            if (folders.containsKey(parentPath)) {
+                                folders.get(parentPath).getChildren().add(video);
                                 continue;
                             } else {
-                                // 初始化imageFloder
                                 List<Video> child = new ArrayList<Video>();
                                 child.add(video);
 
@@ -152,13 +153,10 @@ public class ContentResProvider {
                                 imageFloder.setFirstImagePath(path);
                                 imageFloder.setChildren(child);
 
-                                dirs.put(parentPath, imageFloder);
-
-                                folders.add(imageFloder);
+                                folders.put(parentPath, imageFloder);
                             }
                         }
                         cursor.close();
-                        dirs = null;
                         return folders;
                     }
                 });
@@ -189,31 +187,35 @@ public class ContentResProvider {
                 return  context.getContentResolver()
                         .query(uri, new String[]{
                                         MediaStore.Video.Media._ID,
+                                        MediaStore.Video.Media.MIME_TYPE,
                                         MediaStore.Video.Media.DATA,
                                         MediaStore.Video.Media.DURATION,
                                         MediaStore.Video.Media.DISPLAY_NAME},
-                                MediaStore.Video.Media.MIME_TYPE + "=? or " +
+
+
+                                        MediaStore.Video.Media.MIME_TYPE + "=? or " +
+                                        MediaStore.Video.Media.MIME_TYPE + "=? or " +
                                         MediaStore.Video.Media.MIME_TYPE + "=? or " +
                                         MediaStore.Video.Media.MIME_TYPE + "=?",
-                                new String[] { "video/mp4","video/3gp","video/wmv"},
+                                new String[] {"video/mp4","video/3gp","video/wmv","video/3gpp"},
                                 MediaStore.Video.Media.DATE_MODIFIED);
             }
         });
     }
 
 
-    public static List<File> listImages(File parent){
-        File[] itemPaths = parent.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String filename) {
-                if (filename.endsWith(".jpg")
-                        || filename.endsWith(".png")
-                        || filename.endsWith(".jpeg"))
-                    return true;
-                return false;
-            }
-        });
-
-        return Arrays.asList(itemPaths);
-    }
+//    public static List<File> listImages(File parent){
+//        File[] itemPaths = parent.listFiles(new FilenameFilter() {
+//            @Override
+//            public boolean accept(File dir, String filename) {
+//                if (filename.endsWith(".jpg")
+//                        || filename.endsWith(".png")
+//                        || filename.endsWith(".jpeg"))
+//                    return true;
+//                return false;
+//            }
+//        });
+//
+//        return Arrays.asList(itemPaths);
+//    }
 }

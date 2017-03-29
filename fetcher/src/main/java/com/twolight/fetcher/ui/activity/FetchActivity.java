@@ -34,7 +34,7 @@ public class FetchActivity extends BaseActivity implements LoadView,Route{
         mSearchProgressBar = (ProgressBar) findViewById(R.id.search_progress_bar);
 
         mLoadPresenter = new LoadPresenter(this);
-        mLoadPresenter.load(this,1);
+        mLoadPresenter.load(this);
 
 //      requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE,Constants.PERMISSION_SEARCH_PICTURE);
     }

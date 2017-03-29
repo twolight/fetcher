@@ -15,4 +15,8 @@ public interface Setting {
     int requestCode();
 
 
+    class Type{
+        public static final int IMAGE = 0;
+        public static final int VIDEO = 1;
+    }
 }

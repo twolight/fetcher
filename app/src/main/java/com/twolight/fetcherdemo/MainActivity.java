@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public int type() {
-            return mIsImage ? 0 : 1;
+            return mIsImage ? Type.IMAGE : Type.VIDEO;
         }
 
         @Override

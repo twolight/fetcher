@@ -2,13 +2,17 @@ package com.twolight.fetcher.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.twolight.fetcher.Load;
+import com.twolight.fetcher.R;
 import com.twolight.fetcher.model.Entity;
+import com.twolight.fetcher.model.Video;
+import com.twolight.fetcher.util.DuringUtil;
 
 import java.util.List;
 
@@ -19,11 +23,13 @@ import java.util.List;
 public class PreviewAdapter extends PagerAdapter {
     private Context mContext;
     private List<Entity> mData;
+    private LayoutInflater mLayoutInflater;
 
     public PreviewAdapter(Context context,
                           List<Entity> data) {
         mContext = context;
         mData = data;
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
@@ -33,18 +39,21 @@ public class PreviewAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        String imagePath = mData.get(position).getPath();
+        Entity entity = mData.get(position);
+        String imagePath = entity.getPath();
+        View view = mLayoutInflater.inflate(R.layout.item_preview_item,null);
 
-        ImageView imageView = new ImageView(mContext);
-        ViewPager.LayoutParams params = new ViewPager.LayoutParams();
-        params.width = ViewPager.LayoutParams.MATCH_PARENT;
-        params.height = ViewPager.LayoutParams.MATCH_PARENT;
-        imageView.setLayoutParams(new ViewPager.LayoutParams());
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+        ImageView imageView = (ImageView)view.findViewById(R.id.preview_cover);
         Load.getInstance().load(mContext,imageView,imagePath);
-        container.addView(imageView);
-        return imageView;
+
+        if(entity instanceof Video){
+            Video video = (Video) entity;
+            TextView textView = (TextView)view.findViewById(R.id.preview_during);
+            textView.setText(DuringUtil.converthhmmss(video.getLength() / 1000,"\""));
+        }
+
+        container.addView(view);
+        return view;
     }
 
     @Override

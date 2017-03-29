@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.twolight.fetcher.Load;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.interfaces.Route;
 import com.twolight.fetcher.model.Entity;
+import com.twolight.fetcher.model.Video;
+import com.twolight.fetcher.util.DuringUtil;
 
 /**
  * Created by twolight on 16/7/13.
@@ -36,6 +39,11 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
         final Entity entity = mData.get(position);
         final Holder holder = (Holder)h;
 
+        if (entity instanceof Video) {
+            Video video = (Video) entity;
+            holder.during.setText(DuringUtil.converthhmmss(video.getLength() / 1000,"\""));
+        }
+        holder.during.setVisibility(entity instanceof Video ? View.VISIBLE : View.INVISIBLE);
 
         holder.pictureSelectStatus.setVisibility(Load.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
         holder.pictureSelectStatus.setSelected(entity.isSelected());
@@ -75,14 +83,13 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
     public class Holder extends RecyclerView.ViewHolder {
         public ImageView picture;
         public ImageView pictureSelectStatus;
+        public TextView during;
         public Holder(View itemView) {
             super(itemView);
 
             picture = (ImageView)itemView.findViewById(R.id.item_choose_picture_image);
             pictureSelectStatus = (ImageView)itemView.findViewById(R.id.item_choose_select_status);
+            during = (TextView) itemView.findViewById(R.id.item_choose_during);
         }
-
     }
-
-
 }
