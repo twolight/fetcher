@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.contact.presenter.LoadPresenter;
 import com.twolight.fetcher.contact.view.LoadView;
@@ -69,7 +69,7 @@ public class FetchActivity extends BaseActivity implements LoadView,Route{
     public void ok() {
         Intent intent = new Intent();
         intent.putParcelableArrayListExtra("data", (ArrayList<Entity>) Data.getInstance().getSelected());
-        setResult(Load.getInstance().resultCode(),intent);
+        setResult(SettingRepertory.getInstance().resultCode(),intent);
         finish();
 
         mLoadPresenter.release();

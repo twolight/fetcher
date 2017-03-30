@@ -4,17 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.twolight.fetcher.Load;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.adapter.ChooseAdapter;
 import com.twolight.fetcher.contact.presenter.ChoosePresenter;
-import com.twolight.fetcher.contact.presenter.SelectPresenter;
+import com.twolight.fetcher.contact.presenter.SelectStatusPresenter;
 import com.twolight.fetcher.contact.view.ChooseView;
 import com.twolight.fetcher.contact.view.SelectView;
 import com.twolight.fetcher.interfaces.Route;
@@ -32,9 +30,8 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     private RecyclerView mRecyclerView;
     private ChooseAdapter mChooseAdapter;
     private ChoosePresenter mChoosePresenter;
-    private SelectPresenter mSelectPresenter;
+    private SelectStatusPresenter mSelectStatusPresenter;
 
-//    private Setting mSetting;
     private Route mRoute;
     private String mFolderName;
 
@@ -44,7 +41,6 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     public static ChooseFragment create(Route route,String folderName){
         ChooseFragment fragment = new ChooseFragment();
-//        fragment.mSetting = setting;
         fragment.mRoute = route;
         fragment.mFolderName = folderName;
         return fragment;
@@ -65,8 +61,8 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
         mChoosePresenter = new ChoosePresenter(this);
         mChoosePresenter.getEntityByFolder(mFolderName);
 
-        mSelectPresenter = new SelectPresenter(this);
-        mSelectPresenter.checkSubmitStatus();
+        mSelectStatusPresenter = new SelectStatusPresenter(this);
+        mSelectStatusPresenter.checkSubmitStatus();
     }
 
     private void initHeader() {
@@ -94,13 +90,13 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void getFolderComplete(List<Entity> entities) {
+    public void getFolderComplete(List<Entity> entities,boolean single) {
         mChooseAdapter = new ChooseAdapter(getContext());
         mChooseAdapter.setOnChooseItemListener(this);
         mChooseAdapter.add(entities,false);
         mRecyclerView.setAdapter(mChooseAdapter);
 
-        if(!Load.getInstance().isSingle()){
+        if(!single){
             ViewStub viewStub = findViewById(R.id.view_stub);
             viewStub.inflate();
 
@@ -115,7 +111,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onSelectComplete(Entity entity,int position) {
         mChooseAdapter.notifyItemChanged(position,entity);
-        mSelectPresenter.checkSubmitStatus();
+        mSelectStatusPresenter.checkSubmitStatus();
     }
 
     @Override
@@ -125,13 +121,11 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void showSubmitStatus(boolean show) {
-        if(!Load.getInstance().isSingle()){
-            chooseImagePreview.setSelected(show);
-            chooseImageSubmit.setSelected(show);
+        chooseImagePreview.setSelected(show);
+        chooseImageSubmit.setSelected(show);
 
-            chooseImagePreview.setOnClickListener(show ? this : null);
-            chooseImageSubmit.setOnClickListener(show ? this : null);
-        }
+        chooseImagePreview.setOnClickListener(show ? this : null);
+        chooseImageSubmit.setOnClickListener(show ? this : null);
     }
 
     @Override
@@ -165,8 +159,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.e(ChooseFragment.class.getSimpleName(),"ChooseFragment onDetach");
         mChoosePresenter.detachView();
-        mSelectPresenter.detachView();
+        mSelectStatusPresenter.detachView();
     }
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.model.Album;
 
@@ -34,7 +34,7 @@ public class AlbumAdapter extends BaseRecyclerViewAdapter<Album> {
         final Album album = mData.get(position);
         FolderListHolder holder = (FolderListHolder) h;
 
-        Load.getInstance().load(mContext,holder.folderCover,album.getImage());
+        SettingRepertory.getInstance().load(mContext,holder.folderCover,album.getImage());
         holder.folderName.setText(album.getName());
         holder.folderCount.setText("("+album.getCount()+")");
         holder.folderSelectedCount.setVisibility(album.getSelectCount() > 0 ? View.VISIBLE : View.INVISIBLE);

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.adapter.PreviewAdapter;
 import com.twolight.fetcher.contact.presenter.PreviewPresenter;
@@ -88,9 +88,9 @@ public class PreviewFragment extends BaseFragment implements
         previewSubmit = findViewById(R.id.preview_submit);
 
 
-        previewBack.setVisibility(Load.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
-        previewCancel.setVisibility(Load.getInstance().isSingle() ? View.VISIBLE : View.INVISIBLE);
-        previewSelect.setVisibility(Load.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
+        previewBack.setVisibility(SettingRepertory.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
+        previewCancel.setVisibility(SettingRepertory.getInstance().isSingle() ? View.VISIBLE : View.INVISIBLE);
+        previewSelect.setVisibility(SettingRepertory.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
 
 
         previewCancel.setOnClickListener(this);

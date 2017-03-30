@@ -12,7 +12,7 @@ import com.twolight.fetcher.ui.activity.FetchActivity;
 
 public class Fetch {
     public static void start(Activity activity, Setting setting){
-        Load.getInstance().init(setting);
+        SettingRepertory.getInstance().init(setting);
 
         Intent intent = new Intent(activity, FetchActivity.class);
         activity.startActivityForResult(intent,setting.requestCode());

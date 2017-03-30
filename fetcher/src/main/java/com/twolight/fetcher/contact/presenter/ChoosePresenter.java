@@ -1,6 +1,6 @@
 package com.twolight.fetcher.contact.presenter;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.contact.view.ChooseView;
 import com.twolight.fetcher.model.Data;
 import com.twolight.fetcher.model.DataUseCase;
@@ -18,12 +18,13 @@ public class ChoosePresenter extends BasePresenter<ChooseView> {
 
     public void getEntityByFolder(String folderName){
         if(getView() != null){
-            getView().getFolderComplete(DataUseCase.getFolder(folderName));
+            getView().getFolderComplete(DataUseCase.getFolder(folderName),
+                    SettingRepertory.getInstance().isSingle());
         }
     }
 
     public void selectItem(Entity entity, int position){
-        if(!Load.getInstance().isSingle()){
+        if(!SettingRepertory.getInstance().isSingle()){
             Data.getInstance().choose(entity);
             if(getView() != null){
                 getView().onSelectComplete(entity,position);
@@ -32,7 +33,7 @@ public class ChoosePresenter extends BasePresenter<ChooseView> {
     }
 
     public void clickItem(Entity entity, int position){
-        if(Load.getInstance().isSingle()){
+        if(SettingRepertory.getInstance().isSingle()){
             Data.getInstance().choose(entity);
             if(getView() != null){
                 getView().preview(position);

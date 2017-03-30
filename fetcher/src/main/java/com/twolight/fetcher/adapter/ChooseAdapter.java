@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.model.Entity;
 import com.twolight.fetcher.model.Video;
@@ -41,7 +41,7 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
         }
         holder.during.setVisibility(entity instanceof Video ? View.VISIBLE : View.INVISIBLE);
 
-        holder.pictureSelectStatus.setVisibility(Load.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
+        holder.pictureSelectStatus.setVisibility(SettingRepertory.getInstance().isSingle() ? View.INVISIBLE : View.VISIBLE);
         holder.pictureSelectStatus.setSelected(entity.isSelected());
         holder.pictureSelectStatus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
             }
         });
 
-        Load.getInstance().load(mContext,holder.picture,entity.getPath());
+        SettingRepertory.getInstance().load(mContext,holder.picture,entity.getPath());
         holder.picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

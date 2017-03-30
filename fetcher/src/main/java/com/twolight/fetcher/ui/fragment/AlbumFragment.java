@@ -1,6 +1,5 @@
 package com.twolight.fetcher.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +9,10 @@ import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.twolight.fetcher.Load;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.adapter.AlbumAdapter;
 import com.twolight.fetcher.contact.presenter.AlbumPresenter;
-import com.twolight.fetcher.contact.presenter.SelectPresenter;
+import com.twolight.fetcher.contact.presenter.SelectStatusPresenter;
 import com.twolight.fetcher.contact.view.AlbumView;
 import com.twolight.fetcher.contact.view.SelectView;
 import com.twolight.fetcher.interfaces.Route;
@@ -34,7 +32,7 @@ public class AlbumFragment extends BaseFragment implements
     protected TextView chooseImageSubmit;
 
     private AlbumPresenter mAlbumPresenter;
-    private SelectPresenter mSelectPresenter;
+    private SelectStatusPresenter mSelectStatusPresenter;
     private Route mRoute;
 
 
@@ -54,18 +52,13 @@ public class AlbumFragment extends BaseFragment implements
         super.onActivityCreated(savedInstanceState);
 
         initHeader();
-        initBottom();
 
         mAlbumPresenter = new AlbumPresenter(this);
+        mAlbumPresenter.loadBottom();
         mAlbumPresenter.loadAlbumData();
 
-        mSelectPresenter = new SelectPresenter(this);
-        mSelectPresenter.checkSubmitStatus();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+        mSelectStatusPresenter = new SelectStatusPresenter(this);
+        mSelectStatusPresenter.checkSubmitStatus();
     }
 
     private void initHeader() {
@@ -84,8 +77,9 @@ public class AlbumFragment extends BaseFragment implements
         title.setText(R.string.album);
     }
 
-    public void initBottom(){
-        if(!Load.getInstance().isSingle()){
+    @Override
+    public void initBottom(boolean single){
+        if(!single){
             ViewStub viewStub = findViewById(R.id.album_view_stub);
             viewStub.inflate();
 
@@ -140,6 +134,6 @@ public class AlbumFragment extends BaseFragment implements
     public void onDetach() {
         super.onDetach();
         mAlbumPresenter.detachView();
-        mSelectPresenter.detachView();
+        mSelectStatusPresenter.detachView();
     }
 }

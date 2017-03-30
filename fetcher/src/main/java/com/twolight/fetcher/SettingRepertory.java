@@ -9,12 +9,16 @@ import com.twolight.fetcher.interfaces.Setting;
  * Created by twolight on 17/3/16.
  */
 
-public class Load {
-    private static Load mInstance;
+public class SettingRepertory {
+    private static SettingRepertory mInstance;
 
-    public static Load getInstance(){
+    public static void destroy(){
+        mInstance = null;
+    }
+
+    public static SettingRepertory getInstance(){
         if(mInstance == null){
-            mInstance = new Load();
+            mInstance = new SettingRepertory();
         }
         return mInstance;
     }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.R;
 import com.twolight.fetcher.model.Entity;
 import com.twolight.fetcher.model.Video;
@@ -44,7 +44,7 @@ public class PreviewAdapter extends PagerAdapter {
         View view = mLayoutInflater.inflate(R.layout.item_preview_item,null);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.preview_cover);
-        Load.getInstance().load(mContext,imageView,imagePath);
+        SettingRepertory.getInstance().load(mContext,imageView,imagePath);
 
         if(entity instanceof Video){
             Video video = (Video) entity;

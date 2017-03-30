@@ -2,7 +2,7 @@ package com.twolight.fetcher.contact.presenter;
 
 import android.content.Context;
 
-import com.twolight.fetcher.Load;
+import com.twolight.fetcher.SettingRepertory;
 import com.twolight.fetcher.contact.view.LoadView;
 import com.twolight.fetcher.interfaces.Setting;
 import com.twolight.fetcher.model.Data;
@@ -31,7 +31,7 @@ public class LoadPresenter extends BasePresenter<LoadView> {
 
     public void load(Context context){
 
-        if(Load.getInstance().getType() == Setting.Type.IMAGE){
+        if(SettingRepertory.getInstance().getType() == Setting.Type.IMAGE){
             mSubscription = ContentResProvider.getSystemPicture(context)
                     .compose(RxUtil.<Map<String,Folder<Image>>>normalSchedulers())
                     .subscribe(new Action1<Map<String, Folder<Image>>>() {
@@ -74,6 +74,7 @@ public class LoadPresenter extends BasePresenter<LoadView> {
 
     public void release(){
         Data.getInstance().clear();
+        SettingRepertory.destroy();
     }
 
     @Override
