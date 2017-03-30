@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.twolight.fetcher.Load;
 import com.twolight.fetcher.R;
-import com.twolight.fetcher.interfaces.Route;
 import com.twolight.fetcher.model.Entity;
 import com.twolight.fetcher.model.Video;
 import com.twolight.fetcher.util.DuringUtil;
@@ -20,12 +19,9 @@ import com.twolight.fetcher.util.DuringUtil;
  */
 public class ChooseAdapter extends BaseRecyclerViewAdapter<Entity> {
     private OnChooseItemListener mOnChooseItemListener;
-    private Route mRoute;
 
-
-    public ChooseAdapter(Context context, Route route) {
+    public ChooseAdapter(Context context) {
         super(context);
-        mRoute = route;
     }
 
     @Override

@@ -95,7 +95,7 @@ public class ChooseFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void getFolderComplete(List<Entity> entities) {
-        mChooseAdapter = new ChooseAdapter(getContext(),mRoute);
+        mChooseAdapter = new ChooseAdapter(getContext());
         mChooseAdapter.setOnChooseItemListener(this);
         mChooseAdapter.add(entities,false);
         mRecyclerView.setAdapter(mChooseAdapter);

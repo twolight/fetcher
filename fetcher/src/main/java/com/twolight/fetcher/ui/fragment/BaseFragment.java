@@ -3,13 +3,10 @@ package com.twolight.fetcher.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * Created by twolight on 16/6/12.
@@ -41,30 +38,4 @@ public abstract class BaseFragment extends Fragment{
         return view;
     }
     public abstract int getContentView();
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    protected void replaceFragment(int containerId,Fragment fragment){
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(containerId,fragment);
-        transaction.commit();
-    }
-    protected void addFragment(int containerId,Fragment fragment){
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(containerId,fragment);
-        transaction.commit();
-    }
-
-    public void showToast(String message){
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-    }
-
-    public void showToast(@StringRes int resId){
-        showToast(getResources().getString(resId));
-    }
-
 }
