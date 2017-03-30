@@ -48,7 +48,7 @@ public class Data<T extends Entity> {
         return mEntities;
     }
 
-    public void clear(){
-        mEntities.clear();
+    public static void destroy(){
+        mInstance = null;
     }
 }

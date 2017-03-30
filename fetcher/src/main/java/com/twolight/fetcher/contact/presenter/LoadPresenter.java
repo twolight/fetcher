@@ -73,7 +73,8 @@ public class LoadPresenter extends BasePresenter<LoadView> {
     }
 
     public void release(){
-        Data.getInstance().clear();
+        //清除单例
+        Data.destroy();
         SettingRepertory.destroy();
     }
 
