@@ -1,14 +1,24 @@
-### Fetcher is a library for pick  image/video from phone in Andorid platform. use mvp architecture and easy refactor.
+### Fethcer 
 
+***
 
+Fetcher is a library for pick  image/video from phone in Andorid platform. use mvp architecture and easy refactor.
 
 ### Support:
+
+---
+
+
 
 image/video
 
 single/multiple pick
 
 
+
+### Screen Capture
+
+---
 
 
 
