@@ -4,6 +4,32 @@ Fetcher is a library for pick  image/video from phone in Andorid platform. use m
 
 [demo_apk](https://raw.githubusercontent.com/twolight/fetcher/master/apk/app-debug.apk)
 
+# Download
+
+use Gradle:
+
+```
+
+compile 'com.twolight.fetcher:fetcher:1.0.0'
+
+```
+
+Or Maven:
+
+```
+
+<dependency>
+  <groupId>com.twolight.fetcher</groupId>
+  <artifactId>fetcher</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+
+```
+
+
+
+
 # Support:
 
 image/video
