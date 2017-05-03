@@ -92,11 +92,11 @@ And get result in `onActivityResult`.
 
 
 
-![](https://raw.githubusercontent.com/twolight/fetcher/master/image/32533.png)
+![](https://raw.githubusercontent.com/twolight/fetcher/master/image/32533.jpg)
 
 
 
-![](https://raw.githubusercontent.com/twolight/fetcher/master/image/1949.png)
+![](https://raw.githubusercontent.com/twolight/fetcher/master/image/1949.jpg)
 
 
 
