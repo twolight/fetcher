@@ -29,7 +29,7 @@ public class FetchActivity extends BaseActivity implements LoadView,Route{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_image);
+        setContentView(R.layout.activity_fetch);
 
         mSearchProgressBar = (ProgressBar) findViewById(R.id.search_progress_bar);
 
